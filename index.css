@@ -50,6 +50,7 @@ body {
 
 li {
     margin-top: 2px;
+    list-style-position: inside;
 }
 
 h2, h3 {
@@ -62,13 +63,6 @@ h2, h3 {
 
 .rightfigure {
     float: right;
-}
-
-footer {
-    position: fixed;
-    font-size: 11px;
-    right: 5px;
-    bottom: 0px;
 }
 
 
