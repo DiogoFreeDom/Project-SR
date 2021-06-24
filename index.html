@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Sistemas de Robótica - Grupo 2</title>
+</head>
+<body>
+    <nav>
+        <a class="navitem" href="https://github.com/DiogoFreeDom">Diogo Mendes</a>
+        <a class="navitem" href="https://github.com/brunu97">Bruno Silva</a>
+        <a class="navitem" href="https://github.com/Reinaldo1998">Reinaldo Coelho</a>
+        <a class="navitem" href="https://github.com/radicalricardo">Ricardo Cardoso</a>
+    </nav>
+    <section id="main">
+    <section id="introdução">
+        <h2>Introdução</h2>
+        <p>
+            Neste site vamos fazer uma demonstração de dois robots.
+            O primeiro, Motoman HP6, é considerado uma excelente escolha para automação fabril.
+            A base, cintura e braços delgados permite que o robot seja colocado perto das plataformas que seguram as peças melhorando a acessibilidade a peças [1].
+            O segundo, NAO da Aldebaran Robotics que foi comprada pelo SoftBank Group e renomeada para SoftBank Robotics, é um robot antropomórfico que se tornou um standard em educação e investigação [2].
+            Ambos estão presentes na página 373 da documentação da Robotics Toolbox para MATLAB de Peter Corke [4].
+        </p>
+        <h3>Robotics Toolbox</h3>
+        <p>
+            Para realizar este trabalho utiliza-se a toolbox para MATLAB "Robotics toolbox" de Peter Corke. 
+            Esta toolbox representa 20 anos de desenvolvimento e sempre forneceu imensas funções que são uteis para o estudo e simulação da robótica clássica.
+            A toolbox contém funções e classes orientação e poses 2D e 3D sobre a forma de matrizes e outras estruturas de dados.
+            A toolbox também oferece funções para manipular e converter entre essas várias estruturas de dados que são necessárias para representar posições tridimencionais e orientações.
+            A toolbox representa cinemática e dinâmica de manipuladores SerialLink de uma forma genérica como objectos de MATLAB e permite os utilizadores criar os seus próprios objectos para além de ofecerecer exemplos já construidos para robots conhecidos.
+            Estes exemplos são algo que vamos utilizar extensivamente neste trabalho pois vamos explorar os robots que escolhemos utilizando a toolbox e a sua representação desses robots [3].
+        </p>
+    </section>
+    <!-- robot motoman hp6 -->
+    <section id="motomanHP6" class="column">
+        <h2>Motoman HP6</h2>
+        <figure class="rightfigure">
+            <img id="hp6img" src="https://www.robots.com/images/robots/Motoman/HP-Series/Motoman_HP6_0001.png" alt="" width="200px" height="auto">
+            <figcaption>Fig. 1 - Imagem do robot Motoman HP6</figcaption>
+        </figure>
+        <p>
+            O motoman HP6 tem 6 graus de liberdade (como indica o nome) e aplica os parametros standard de Denavit–Hartenberg.
+             Na framework de robótica de Peter Corke para o MATLAB pode ser inicializado com o comando mdl_motomanHP6, este comando cria uma variável hp6 que representa o robot.
+             Na figura 1 podemos ver uma imagem real do robot, e na figura 3 o resultado da função teach() da toolbox no MATLAB.
+        </p>
+        <figure class="leftfigure">
+            <img src="hp6_teach.png" alt="" width="400px" height="auto">
+            <figcaption>Fig. 3 - Comando hp6.teach() da toolbox</figcaption>
+        </figure>
+        <p>Na interface do teach, à esquerda da representação gráfica do robot, podemos ver algumas estatísticas do robot:<br>
+             <ul> 
+                 <li>em cima, as coordenadas do efetor final, este conjunto de valores indica a posição do efetor relativamente ao centro do referencial que neste caso também é a posição da primeira junta;</li>
+                 <li>no centro, podemos ver os valores de Roll, Pitch e Yaw do robot que representam o quanto a orientação dos eixos do efetor relativamente à sua posição base (que é a orientação do gráfico);</li>
+                 <li>finalmente temos cada junta e o respetivo ângulo que podemos variar manualmente.</li>
+            </ul>
+            Após a chamada o estado do robot é aquele que se mostra na imagem, com o ângulo de todas as juntas a 0.
+            Na representação do MATLAB podemos observar que o HP6 é caracterizado por 6 juntas e 2 links. Os links não têm características especiais e as juntas têm as seguintes características: </p>
+        <ul>
+            <li>q1 - Esta é a primeira junta do robot, é a junta que permite o robot rodar e chegar a qualquer local em seu redor.</li>
+            <li>q2 - Esta é a segunda junta do robot, é uma das juntas que permite o robot chegar a diferentes elevações, visto que, tem grande influência no pitch do robot.</li>
+            <li>q3 - A terceira junta do robot, que em conjunto com a segunda junta ajuda o robot a chegar a diferente eleveções, pois influência maioritariamente o pitch, mas também pode ser usado para posicionar o efetor.</li>
+            <li>q4 - A quarta junta permite rodar o suport do efetor.</li>
+            <li>q5 - A quinta junta permite rodar o efetor ao longo do eixo Y.</li>
+            <li>q6 - A sexta junta permite rodar o efetor ao longo do eixo Z.</li>
+        </ul>
+        <p>A toolbox inclui uma pose default, q0 - mastering position. Na figura 5 apresentamos um gif que usa essa pose, como exemplo de utilização do robot.</p>
+        <figure class="leftfigure">
+            <img src="motomanhp6animation.gif" alt="" width="400px" height="auto">
+            <figcaption>Fig 5. - Animação do robot Motoman HP6 exemplificando o robot a pegar num objecto e a colocá-lo noutro local.</figcaption>
+        </figure>
+        <p>
+            Esta animação foi obtida aplicando o seguinte código no MATLAB: br
+            <ul>
+                <li>mdl_motomanHP6</li>
+                <li>% As quatro posições pelas quais o robot passa</li>
+                <li>qDefault = [0,0,0,0,-pi/2,0];</li>
+                <li>q0rotated = q0 + [pi/2, 0, 0, 0, 0, 0];</li>
+                <li>qFinal = q0rotated + [0, pi/2, 0, 0, 0, 0];</li>
+                <li>segments = [q0; q0rotated; qFinal; q0rotated; q0; qDefault];</li>
+                <li>tseg = [1, 1, 1];</li>
+                <li>tseg = [tseg, tseg];</li>
+                <li>traj = mstraj(segments, [], tseg, qDefault, 0.1, 0.1);</li>
+                <li>hp6.plot(traj)</li></li>
+            </ul>
+        </p>
+        
+    </section>
+    <!-- robot nao -->
+    <section id="nao" class="column">
+        <h2>NAO</h2>
+        <figure class="rightfigure">
+            <img id="naoimg" src="https://upload.wikimedia.org/wikipedia/commons/4/47/Nao_Robot_%28Robocup_2016%29.jpg" alt="" width="200px" height="auto">
+            <figcaption>Fig. 2 - Imagem do robot NAO</figcaption>
+        </figure>
+        <p>
+            O Aldebaran NAO tem 4 graus de liberdade com aspecto humanoide que aplica os parametros standard de Denavit–Hartenberg. 
+            Na framework de Peter Corke para o MATLAB pode ser inicializado com o comando mdl_nao que cria 4 variáveis (leftarm, rightarm, leftleg, rightleg) que representam os membros antropomórficos moviveis do robot.
+            Ao contrário do outro robot nesta página, que só tem um único objecto SerialLink para todo o robot, cada um destes membros é um objecto SerialLink do MATLAB.
+            Na figura 2 pode ver um exemplo real deste robot.
+        </p>
+        <figure class="leftfigure">
+            <img src="NAO_'teach'.png" alt="" width="400px" height="auto">
+            <figcaption>Fig. 4 - Ilustração do cada robot</figcaption>
+        </figure>
+        <p>
+            Na figura 4 apresenta-se a representação no MATLAB dos 4 membros e alguns polígonos, realizados com a função patch() [4], para dar ideia de como os membros se dispõem relativamente ao corpo.
+            Os 4 membros são compostos por dois pares de SerialLinks que são espelhados entre si, um par para os braços e outro para as pernas.
+            Os braços são compostos por 2 links e 4 juntas com as seguintes características:
+            <ul>
+                <li>
+                    q1 - Representa a rotação do ombro e em conjunto com q2 representa o movimento do ombro humano.
+                    Realistacemente o seu ângulo de operação deve estar entre -100&deg; a 120&deg;;
+                </li>
+                <li>
+                    q2 - Representa o aumento do ângulo do braço relativamente ao resto do corpo e em conjunto com q1 representa o movimento do ombro humano.
+                    Realisticamente o seu ângulo de operação deve estar entre -60&deg; e 176&deg; mas dependendo da sua posição este limite inferior é mais restrito por ser bloqueado pelo corpo;
+                </li>
+                <li>
+                    q3 - Representa a rotação do braço, nomeadamente ao nível do cotovelo.
+                    Para melhor simular a rotação desta parte do corpo no ser humano o seu ângulo de operação deve estar entre -90&deg; e 90&deg;;
+                </li>
+                <li>
+                    q4 - Representa a contração e distenção do braço que resulta no movimento rotacional do cotovelo.
+                    Realisticamente o seu ângulo de operação deve estar entre 0&deg; e 140&deg; mas o limite superior pode variar dependendo da grossura dos braços.
+                </li>
+            </ul>
+            As pernas são compostas por 3 links e 6 juntas com as seguintes características:
+            <ul>
+                <li>
+                    q1 - Representa o movimento em conjunto dos glúteos e anca e em conjunto com q2 e q3 representa o movimento das pernas.
+                    Realisticamente o seu ângulo de operação deve estar entre -90&deg; e 90&deg;;
+                </li>
+                <li>
+                    q2 - Representa o movimento do gluteo e em conjunto com q1 e q3 representa o movimento das pernas.
+                    Realisticamente o seu ângulo de operação deve estar entre -35&deg; e 90&deg;;
+                </li>
+                <li>
+                    q3 - Representa o movimento da anca e em conjunto com q1 e q2 reoresenta o movimento das pernas.
+                    Realisticamente o seu ângulo de operação deve estar entre -120&deg; e 50&deg;;
+                </li>
+                <li>
+                    q4 - Representa a rotação do joelho. Realisticamente o seu ângulo de operação deve estar entre 0&deg; e 100&deg;;
+                </li>
+                <li>q5 - Representa a rotação do tornozelo no plano da perna. Realisticamente o seu ângulo de operação deve estar entre -5&deg; e 90&deg;;</li>
+                <li>
+                    q6 - Representa a toração do tornozelo no plano perpendicular à perna.
+                    Realisticamente o seu ângulo de operação deve ser bastante restrito entre -30&deg; e 15&deg;.
+                </li>
+            </ul>
+        </p>
+        
+    </section>
+    <section id="bibliografia">
+        <h2>Bibliografia</h2>
+        <ol id=listabiblio>
+            <li>https://www.robots.com/robots/motoman-hp6 consultado em 23/06/2021</li>
+            <li>https://www.softbankrobotics.com/emea/en/nao consultado em 23/06/2021</li>
+            <li>https://petercorke.com/toolboxes/robotics-toolbox/ consultado em 23/06/2021</li>
+            <li>Corke, P., Robotics Toolbox for MATLAB, Release 10</li>
+            <li>https://www.mathworks.com/help/matlab/ref/patch.html consultado em 23/06/2021</li>
+        </ol>
+    </section>
+    </section>
+    <footer>
+        <p>Realizado por: Diogo Mendes - 30003865, Bruno Silva - 30003696, Reinaldo Coelho - 30003670, Ricardo Cardoso - 30002299</p>
+    </footer>
+</body>
+</html>

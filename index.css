@@ -1,0 +1,76 @@
+:root{
+    --the-blue: #329ACC;
+    --white-text: #f1f1f1;
+}
+
+nav {
+    background-color: #111111;
+    padding: 15px;
+}
+
+.navitem {
+    text-decoration: none;
+    padding: 5px;
+    color: var(--white-text);
+}
+
+.navitem:hover {
+    background-color: var(--the-blue);
+}
+
+body {
+    text-indent: 20px;
+    background-color: #222222;
+    color: var(--white-text);
+    margin: 0px;
+}
+
+#main {
+    margin: 1%;
+    text-align: justify;
+    text-justify: distribute;
+}
+
+.column {
+    width: 47.5%;
+    float: left;
+    padding-right: 1%;
+    padding-left: 1%;
+}
+
+.column > figure {
+    text-align: center;
+    max-width: min-content;
+    margin: 1%;
+}
+
+#motomanHP6 {
+    border-right: solid var(--the-blue) 2px;
+}
+
+li {
+    margin-top: 2px;
+}
+
+h2, h3 {
+    color: var(--the-blue);
+}
+
+.leftfigure {
+    float: left;
+}
+
+.rightfigure {
+    float: right;
+}
+
+footer {
+    position: fixed;
+    font-size: 11px;
+    right: 5px;
+    bottom: 0px;
+}
+
+
+
+
