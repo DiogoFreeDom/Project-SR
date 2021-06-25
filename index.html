@@ -73,8 +73,8 @@
             <figcaption>Fig 5. - Animação do robot Motoman HP6 exemplificando o robot a pegar num objecto e a colocá-lo noutro local.</figcaption>
         </figure>
         <p>
-            Esta animação foi obtida aplicando o seguinte código no MATLAB: br
-            <ul>
+            Esta animação foi obtida aplicando o seguinte código no MATLAB:
+            <ul class="codigo">
                 <li>mdl_motomanHP6</li>
                 <li>% As quatro posições pelas quais o robot passa</li>
                 <li>qDefault = [0,0,0,0,-pi/2,0];</li>
@@ -143,13 +143,44 @@
                     Realisticamente o seu ângulo de operação deve estar entre -120&deg; e 50&deg;;
                 </li>
                 <li>
-                    q4 - Representa a rotação do joelho. Realisticamente o seu ângulo de operação deve estar entre 0&deg; e 100&deg;;
+                    q4 - Representa a rotação do joelho. Realisticamente o seu ângulo de operação deve estar entre 0&deg; e 100&deg;, 
+                    mas dependendo da orientação da perna pode chegar ao redor dos 135&deg;, por causa da influência da gravidade;
                 </li>
                 <li>q5 - Representa a rotação do tornozelo no plano da perna. Realisticamente o seu ângulo de operação deve estar entre -5&deg; e 90&deg;;</li>
                 <li>
                     q6 - Representa a toração do tornozelo no plano perpendicular à perna.
                     Realisticamente o seu ângulo de operação deve ser bastante restrito entre -30&deg; e 15&deg;.
                 </li>
+            </ul>
+            É importante referir que, devido à simetria, todos estes ângulos se invertem dependendo do braço ou perna que estamos a movimentar.
+            Na figura 6 demonstramos um movimento para cada membro, imaginando um exercício de aquecimento do robot.
+        </p>
+        <figure class="leftfigure">
+            <img src="NAOexercise.gif" alt="">
+            <figcaption>Fig. 6 - Robot NAO a fazer o seu aquecimento.</figcaption>
+        </figure>
+        <p>
+            Esta animação foi realizada com o seguinte código no NATLAB:
+            <ul class="codigo">
+                <li>mdl_nao</li>
+                <li>zero4 = [0,0,0,0];</li>
+                <li>zero = [0 0 0 0 0 0];</li>
+                <li>crouch = [0 0 (-120*pi)/180 (135*pi)/180 0 0];</li>
+                <li>segments = [crouch; zero];</li>
+                <li>traj = mstraj(segments, [], [1 1], zero, 0.1, 0.1);</li>
+                <li>leftleg.plot(traj)</li>
+                <li>rightleg.plot(traj)</li>
+                <li>bracoNoOmbro = [(20*pi)/180 (45*pi)/180 0 (70*pi)/180];</li>
+                <li>restingArm = [pi/2 0 0 0];</li>
+                <li>segments = [bracoNoOmbro; restingArm];</li>
+                <li>curvaBraco = mstraj(segments, [], [1 1], zero4, 0.1, 0.1);</li>
+                <li>rightarm.plot(curvaBraco)</li>
+                <li>% inverte o movimento para um simétrico devido à mudança de lado</li>
+                <li>bracoNoOmbro(4) = -bracoNoOmbro(4);</li>
+                <li>bracoNoOmbro(2) = -bracoNoOmbro(2);</li>
+                <li>segments = [bracoNoOmbro; restingArm];</li>
+                <li>curvaBraco = mstraj(segments, [], [1 1], zero4, 0.1, 0.1);</li>
+                <li>leftarm.plot(curvaBraco)</li>
             </ul>
         </p>
         
